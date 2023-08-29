@@ -22,45 +22,28 @@ const dbConnection = async () => {
 
 dbConnection();
 
-app.post("/api/signup", cors(), (req, res) => {
-  bcrypt.hash(req.body.password, 10)
-      .then((saltedPassword) => {
-          const user = new User (
-              {
-              userName: req.body.userName,
-              email: req.body.email,
-              password: saltedPassword
-              }
-          )
-          user.save()
-          .then((result) => {
-              res.status(200).send({
-                  result,
-              })
-          })
-      })
+app.post("api/create", (req,res) => {
+    const customerAddress = new CustomerAddress (
+        {
+            Name: req.body.Name,
+            Address: req.body.Address,
+            Phone: req.body.Phone
+        }
+    )
+    customerAddress.save()
+    .then((result) => {
+        res.status(200).send ({
+            result,
+        })
+    })
+})
+app.get("/api/customer", cors(), (req, res) => {
+    CustomerAddress.find({}).then(customers => {
+        res.status(200).json(customers)
+    })
 })
 
-app.post("/api/login", async (req, res) => {
-  const { userName, password } = req.body;
 
-  try {
-  const user = await User.findOne({ userName });
-  if (!user) {
-      return res.status(404).json({ error: "Incorrect username/password" });
-  }
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) {
-      return res.status(404).json({ error: "Incorrect username/password" });
-  }
-  req.session.userId = user._id;
-  await req.session.save();
-  res.sendStatus(200);
-  } catch (err) {
-      console.error("Error logging in:", err);
-      res.sendStatus(500);
-  }
-});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port : ${PORT}`)
