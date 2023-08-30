@@ -4,6 +4,7 @@ import "./loadEnviroment.mjs";
 import mongoose from "mongoose";
 import 'dotenv/config' 
 import bodyParser from "body-parser";
+import customerinfo from "./models/customerinfo.js";
 
 const PORT = process.env.PORT || "";
 const app = express();
@@ -22,15 +23,15 @@ const dbConnection = async () => {
 
 dbConnection();
 
-app.post("api/create", (req,res) => {
-    const customerAddress = new CustomerAddress (
+app.post("/api/payment", (req, res) => {
+    const customer = new customerinfo (
         {
-            Name: req.body.Name,
-            Address: req.body.Address,
-            Phone: req.body.Phone
+            name: req.body.name,
+            address: req.body.address,
+            phone: req.body.phone
         }
     )
-    customerAddress.save()
+    customer.save()
     .then((result) => {
         res.status(200).send ({
             result,
@@ -38,7 +39,7 @@ app.post("api/create", (req,res) => {
     })
 })
 app.get("/api/customer", cors(), (req, res) => {
-    CustomerAddress.find({}).then(customers => {
+    customerAddress.find({}).then(customers => {
         res.status(200).json(customers)
     })
 })
