@@ -28,7 +28,10 @@ app.post("/api/payment", (req, res) => {
         {
             name: req.body.name,
             address: req.body.address,
-            phone: req.body.phone
+            phone: req.body.phone,
+            cardNumber: req.body.cardNumber,
+            expirationDate: req.body.expirationDate,
+            cv: req.body.cv
         }
     )
     customer.save()

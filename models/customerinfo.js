@@ -9,7 +9,19 @@ const customerSchema = new Schema({
     },
     phone: {
         type: String,
-    }
+    },
+    cardNumber: {
+        type: String,
+        require: true,
+    },
+    expirationDate: {
+        type: Number,
+        require: true,
+    },
+    cv: {
+        type: Number,
+        require: true,
+    },
 })
 const customerinfo = model("customerinfo", customerSchema)
 
