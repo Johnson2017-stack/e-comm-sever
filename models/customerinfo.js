@@ -15,11 +15,11 @@ const customerSchema = new Schema({
         require: true,
     },
     expirationDate: {
-        type: Number,
+        type: String,
         require: true,
     },
     cv: {
-        type: Number,
+        type: String,
         require: true,
     },
 })

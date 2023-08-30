@@ -37,7 +37,7 @@ app.post("/api/payment", (req, res) => {
     customer.save()
     .then((result) => {
         res.status(200).send ({
-            result,
+            result, 
         })
     })
 })
