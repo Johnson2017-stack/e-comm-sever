@@ -39,7 +39,7 @@ app.post("/api/payment", (req, res) => {
     })
 })
 app.get("/api/customer", cors(), (req, res) => {
-    customerAddress.find({}).then(customers => {
+    customerinfo.find({}).then(customers => {
         res.status(200).json(customers)
     })
 })
